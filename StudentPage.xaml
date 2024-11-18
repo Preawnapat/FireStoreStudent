@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FireStoreStudent.StudentPage"
+             xmlns:local="clr-namespace:FireStoreStudent.ViewModels"
+             Title="StudentPage">
+    <Grid RowDefinitions=".2*,.7*">
+        <!-- Student Form Section -->
+        <VerticalStackLayout Grid.Row="0" Padding="20">
+            <Label Text="Students Page" ></Label>
+
+
+            <!-- Entry for Student Code -->
+            <Entry Placeholder="Student Code"
+               Text="{Binding CurrentStudent.Code}"></Entry>
+
+            <!-- Entry for Student Name -->
+            <Entry Placeholder="Student Name"
+               Text="{Binding CurrentStudent.Name}" ></Entry>
+
+            <!-- Button Section -->
+            <Grid ColumnDefinitions=".3*,.7*" ColumnSpacing="5">
+                <Button Grid.Column="0"  Text="Reset"
+                    Command="{Binding Reset}" ></Button>
+                <Button Grid.Column="1" Text="Add or Update"
+                    Command="{Binding AddOrUpdateCommand}" ></Button>
+            </Grid>
+        </VerticalStackLayout>
+
+        <!-- List of Students -->
+        <ScrollView Padding="20" Grid.Row="1">
+            <CollectionView ItemsSource="{Binding Students}"
+                        SelectionMode="Single"
+                        SelectedItem="{Binding CurrentStudent}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <!-- Swipe Items -->
+                            <SwipeView.LeftItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Delete"
+                                           BackgroundColor="Red"
+                                           Command="{Binding Source={RelativeSource AncestorType={x:Type local:StudentViewModel}}, Path=DeleteCommand}">
+                                    </SwipeItem>
+                                </SwipeItems>
+                            </SwipeView.LeftItems>
+
+                            <!-- Student Data Display -->
+                            <Grid ColumnDefinitions="*,*,*">
+                                <Label Grid.Column="0"
+                                   Text="{Binding Id}" ></Label>
+                                <Label Grid.Column="1"
+                                   Text="{Binding Code}" ></Label>
+                                <Label Grid.Column="2"
+                                   Text="{Binding Name}" ></Label>
+                                
+                            </Grid>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+    </Grid>
+</ContentPage>
